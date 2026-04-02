@@ -6,25 +6,24 @@
 #include "job.h"
 #include "scheduler.h"
 
-class FirstInFirstOut : public Scheduler {
+class ShortestJobFirst : public Scheduler {
     std::vector<std::shared_ptr<Job>> jobs{};
-    std::unordered_map<int, int> arrivals{};
-    int tick{0};
+    std::shared_ptr<Job> currentJob{nullptr};
 
     void sort();
 
   public:
-    /// Adds job to end of queue, ignored if present.
+    /// Adds job to list, ignored if present.
     void addJob(const std::shared_ptr<Job> &job) override;
-    /// Removes job from queue, ignored if missing.
+    /// Removes job from list, ignored if missing.
     void remJob(const std::shared_ptr<Job> &job) override;
     /// Set new tick for queue to use as present.
     void update(int tick) override;
     /// Return job at front of queue.
     std::shared_ptr<Job> chooseJob() override;
-    /// Return string representation of FIFO object.
+    /// Return string representation of SJF object.
     std::string toString() const override;
 
-    FirstInFirstOut() = default;
-    ~FirstInFirstOut() override = default;
+    ShortestJobFirst() = default;
+    ~ShortestJobFirst() override = default;
 };

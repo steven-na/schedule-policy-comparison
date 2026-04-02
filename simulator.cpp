@@ -7,9 +7,14 @@ Simulator::Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
     case Scheduler::SchedulerType::FIFO:
         mScheduler = std::make_unique<FirstInFirstOut>();
         break;
+    case Scheduler::SchedulerType::SJF:
+        mScheduler = std::make_unique<ShortestJobFirst>();
+        break;
     default:
         throw std::invalid_argument("Unknown Scheduler Type");
     }
+
+    jobPreviouslyRun.reserve(mAllJobs.size());
 }
 
 void Simulator::addJob(const std::shared_ptr<Job> &j) { mScheduler->addJob(j); }
@@ -93,6 +98,9 @@ void Simulator::updateCompleteJob(std::shared_ptr<Job> &j) {
         remJob(j);
         mCompletedJobs.emplace_back(j);
 
+        // Log completion
+        jobCompletions[j->id] = tick;
+
         size_t i;
         bool found = false;
         for (i = 0; i < mActiveJobs.size(); i++) {
@@ -117,6 +125,17 @@ void Simulator::mainLoop() {
         if (chosen_job) {
             chosen_job->time_remaining--;
             updateCompleteJob(chosen_job);
+
+            // Log first run times
+            // This may get heavy as more jobs have completed, might look into
+            // optimizing
+            if (!std::any_of(jobPreviouslyRun.begin(), jobPreviouslyRun.end(),
+                             [chosen_job](int job_id) {
+                                 return chosen_job->id == job_id;
+                             })) {
+                jobPreviouslyRun.emplace_back(chosen_job->id);
+                jobFirstRunTimes[chosen_job->id] = tick;
+            }
         }
 
         tick++;
@@ -137,7 +156,7 @@ void Simulator::mainLoop() {
 }
 
 void Simulator::setup() {
-    tick = 0;
+    assert(tick == 0 && "Simulator::setup() should only be run once at start");
     buildInitialState();
     loadInitialJobs();
     mScheduler->update(tick);
@@ -154,3 +173,62 @@ std::string Simulator::toString() const {
 }
 
 void Simulator::print() const { std::cout << toString() << '\n'; }
+
+// Performance metrics
+double Simulator::avgTimeTurnaround() const {
+    int total_complete = 0;
+    int turnaround_sum = 0;
+
+    for (auto j : jobCompletions) {
+        int job_id{j.first};
+        int job_end_time{j.second};
+        int job_start_time{-1};
+        for (const auto &job : mCompletedJobs) {
+            if (job->id == job_id) {
+                job_start_time = job->time_arrival;
+                break;
+            }
+        }
+        if (job_start_time != -1) {
+            turnaround_sum += (job_end_time - job_start_time);
+            total_complete++;
+        }
+    }
+    if (total_complete != 0) {
+        return static_cast<double>(turnaround_sum) /
+               static_cast<double>(total_complete);
+    }
+    return -1.0;
+};
+
+double Simulator::avgTimeResponse() const {
+    int total_complete = 0;
+    int response_sum = 0;
+
+    for (auto j : jobFirstRunTimes) {
+        int job_id{j.first};
+        int job_first_run_time{j.second};
+        int job_arrival_time{-1};
+        for (const auto &job : mCompletedJobs) {
+            if (job->id == job_id) {
+                job_arrival_time = job->time_arrival;
+                break;
+            }
+        }
+        if (job_arrival_time != -1) {
+            response_sum += (job_first_run_time - job_arrival_time);
+            total_complete++;
+        }
+    }
+    if (total_complete != 0) {
+        return static_cast<double>(response_sum) /
+               static_cast<double>(total_complete);
+    }
+    return -1.0;
+};
+
+void Simulator::printMetrics() const {
+    std::println(
+        "Metrics for {}\n\tAverage turnaround: {}\n\tAverage response: {}",
+        mScheduler->toString(), avgTimeTurnaround(), avgTimeResponse());
+}

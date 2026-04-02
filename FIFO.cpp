@@ -36,7 +36,7 @@ void FirstInFirstOut::sort() {
 
 void FirstInFirstOut::update(int tick) { this->tick = tick; }
 
-std::shared_ptr<Job> FirstInFirstOut::chooseJob() const {
+std::shared_ptr<Job> FirstInFirstOut::chooseJob() {
     if (jobs.empty()) {
         return nullptr;
     }
