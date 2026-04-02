@@ -4,7 +4,7 @@ tags:
   - programming
 fs_location: ~/projects/programming/cpp/job-schedule-comp
 ---
-n# Scheduling Policy Comparison Program
+# Scheduling Policy Comparison Program
 ---
 ## Project Overview
 ### Problem
@@ -19,7 +19,7 @@ Engineers interested in choosing a scheduler for their use case.
 ### Schedulers to Compare
 First in First Out, Shortest Job First, Shortest Time-to-Completion First, Round Robin, Multi Level Feedback Queue, Lottery, Stride, Completely Fair Scheduler (CFS will be implemented last out of everything in the project). In the workload file, configs for each scheduler will be laid out (RR quantum, MLFQ queue count/quanta, lottery seed, etc)
 ### Comparison Criteria
-High level criteria will include averages of turnaround time ($T_{turnaround}=T_{completion}-T_{arrival}$), response time ($T_{response}=T_{first run}-T_{arrival}$), fairness ($F=T_{firstcomplet}/T_{secondcomplete}$), detailed logs of the runs will be provided for analysis as well (CSV of every timestep for each scheduler and the information for each job mapped to the timesteps)
+High level criteria will include averages of turnaround time ($T_{turnaround}=T_{completion}-T_{arrival}$), response time ($T_{response}=T_{first run}-T_{arrival}$), fairness ($F=T_{firstcomplete}/T_{secondcomplete}$), detailed logs of the runs will be provided for analysis as well (CSV of every timestep for each scheduler and the information for each job mapped to the timesteps)
 ### Out of scope
 Multi-processor schedulers, Real time comparisons/running (system benchmark)
 
