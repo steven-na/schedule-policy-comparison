@@ -4,10 +4,10 @@
 #include "util.h"
 
 #include "job.h"
-#include "scheduler.h"
+#include "schedulers/scheduler.h"
 
-#include "FIFO.h"
-#include "SJF.h"
+#include "schedulers/FIFO.h"
+#include "schedulers/SJF.h"
 
 class Simulator {
     // workload and scheduler data

@@ -1,5 +1,5 @@
 #include "job.h"
-#include "scheduler.h"
+#include "schedulers/scheduler.h"
 #include "simulator.h"
 
 int main() {

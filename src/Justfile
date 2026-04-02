@@ -1,5 +1,5 @@
 mainfiles := "main.cpp simulator.cpp"
-otherfiles := "FIFO.cpp SJF.cpp"
+otherfiles := "./schedulers/FIFO.cpp ./schedulers/SJF.cpp"
 
 build:
     g++ -ggdb -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion \

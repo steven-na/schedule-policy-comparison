@@ -1,9 +1,9 @@
 #pragma once
 
-#include "common.h"
-#include "util.h"
+#include "../common.h"
+#include "../util.h"
 
-#include "job.h"
+#include "../job.h"
 
 class Scheduler {
   public:
