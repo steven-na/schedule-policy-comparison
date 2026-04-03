@@ -4,9 +4,11 @@
 
 int main() {
     std::vector<std::shared_ptr<Job>> workload;
-    workload.reserve(1000);
-    for (int i = 0; i < 1000; i++) {
-        int len{(rand() % 2000) + 1};
+    size_t job_count = 10;
+    int avg_job_length = 50;
+    workload.reserve(job_count);
+    for (int i = 0; i < job_count; i++) {
+        int len{(rand() % (avg_job_length * 2)) + 1};
         workload.emplace_back(std::make_shared<Job>(
             Job{.id{i + 1}, .time_remaining{len}, .time_arrival{0}}));
     }
@@ -28,7 +30,7 @@ int main() {
         s.printMetrics();
     }
     {
-        Simulator s{getOwnWorkload(), Scheduler::SchedulerType::SJF};
+        Simulator s{getOwnWorkload(), Scheduler::SchedulerType::FIFOQUEUE};
         s.setup();
         s.run();
         s.print();

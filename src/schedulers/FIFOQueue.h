@@ -4,26 +4,12 @@
 #include "../util.h"
 
 #include "../job.h"
+#include "JobQueue.h"
 #include "scheduler.h"
-
-class JobQueue {
-    struct QueueItem {
-        std::shared_ptr<Job> job{};
-        QueueItem *next{};
-        QueueItem *prev{};
-    };
-    QueueItem *head{nullptr};
-    QueueItem *tail{nullptr};
-
-  public:
-    void enqueue(std::shared_ptr<Job> &job);
-    void enqueueWeighted(std::shared_ptr<Job> &job);
-    std::optional<std::shared_ptr<Job>> poll();
-    std::optional<std::shared_ptr<Job>> peek();
-};
 
 class FirstInFirstOutQueue : public Scheduler {
     JobQueue jobs{};
+    std::shared_ptr<Job> currentJob{};
     int tick{0};
 
   public:

@@ -7,6 +7,9 @@ Simulator::Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
     case Scheduler::SchedulerType::FIFO:
         mScheduler = std::make_unique<FirstInFirstOut>();
         break;
+    case Scheduler::SchedulerType::FIFOQUEUE:
+        mScheduler = std::make_unique<FirstInFirstOutQueue>();
+        break;
     case Scheduler::SchedulerType::SJF:
         mScheduler = std::make_unique<ShortestJobFirst>();
         break;

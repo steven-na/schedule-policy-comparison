@@ -51,7 +51,7 @@ std::string ShortestJobFirst::toString() const {
     if (!currentJob) {
         return std::format("SJF()");
     } else {
-        return std::format("SJF({} with {} remaining)", currentJob->id,
+        return std::format("SJF({} with {} remaining ticks)", currentJob->id,
                            currentJob->time_remaining);
     }
 }

@@ -7,6 +7,7 @@
 #include "schedulers/scheduler.h"
 
 #include "schedulers/FIFO.h"
+#include "schedulers/FIFOQueue.h"
 #include "schedulers/SJF.h"
 
 class Simulator {
