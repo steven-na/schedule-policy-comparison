@@ -9,6 +9,7 @@ void FirstInFirstOutQueue::addJob(const std::shared_ptr<Job> &job) {
         jobs.enqueueWeighted(job, [job](const std::shared_ptr<Job> &other_job) {
             return job->id < other_job->id;
         });
+        return;
     }
     jobs.enqueue(job);
 }

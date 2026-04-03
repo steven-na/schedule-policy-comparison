@@ -23,8 +23,23 @@ void JobQueue::dequeue(const std::shared_ptr<Job> &job) {
     std::shared_ptr<QueueItem> test_against = tail;
     while (test_against) {
         if (test_against->job->id == job->id) {
-            test_against->next->prev = test_against->prev;
-            test_against->prev->next = test_against->next;
+            bool eq_head = test_against == head;
+            bool eq_tail = test_against == tail;
+            if (eq_head && eq_tail) {
+                head = nullptr;
+                tail = nullptr;
+                return;
+            }
+            if (eq_tail) {
+                tail = test_against->prev;
+                tail->next = nullptr;
+            } else if (eq_head) {
+                head = test_against->next;
+                head->prev = nullptr;
+            } else {
+                test_against->prev->next = test_against->next;
+                test_against->next->prev = test_against->prev;
+            }
             return;
         }
         test_against = test_against->prev;
