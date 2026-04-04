@@ -118,6 +118,8 @@ CSV for timestamps, JSON output files for job info and metrics/scheduler info (J
 - [ ] **Phase 5**: Implement MLFQ and configuration for it (2 weeks)
 - [ ] **Phase 6**: Implement data collection (log each event in loop) and analysis (average of metrics and comparison of each scheduler) (1.5 weeks)
 - [ ] **Phase 7**: CLI polish/document interface, Data mutation into CSV and JSON Files (1 week) (Project is done now)
+	- [ ] Optimise if necessary.
+		- Ideas: Priority queue for NotArrivedJobs instead of vector.
 - [ ] **Phase 8**: Implement CFS itself. A project by itself (2-3 weeks)
 
 ---

@@ -28,9 +28,6 @@ std::shared_ptr<Job> FirstInFirstOutQueue::chooseJob() {
     if (!currentJob) {
         currentJob = jobs.poll();
     }
-    if (!currentJob) {
-        exit(1);
-    }
     return currentJob;
 }
 

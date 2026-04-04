@@ -9,6 +9,7 @@
 #include "schedulers/FIFO.h"
 #include "schedulers/FIFOQueue.h"
 #include "schedulers/SJF.h"
+#include "schedulers/STCF.h"
 
 class Simulator {
     // workload and scheduler data

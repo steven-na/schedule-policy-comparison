@@ -71,10 +71,10 @@ void JobQueue::enqueueWeighted(
         tail->next = new_item;
         tail = new_item;
     } else { // Middle insert
-        new_item->prev = test_against->prev;
-        new_item->next = test_against;
-        test_against->prev->next = new_item;
-        test_against->prev = new_item;
+        new_item->prev = test_against;
+        new_item->next = test_against->next;
+        test_against->next->prev = new_item;
+        test_against->next = new_item;
     }
 }
 
@@ -109,7 +109,7 @@ std::shared_ptr<Job> JobQueue::poll() {
     return out;
 }
 
-std::shared_ptr<Job> JobQueue::peek() {
+std::shared_ptr<Job> JobQueue::peek() const {
     std::shared_ptr<Job> out{};
     if (head) {
         out = head->job;

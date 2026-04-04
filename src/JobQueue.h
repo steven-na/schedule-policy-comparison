@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../common.h"
+#include "common.h"
 
-#include "../job.h"
+#include "job.h"
 
 class JobQueue {
     struct QueueItem {
@@ -22,7 +22,7 @@ class JobQueue {
                          std::function<bool(std::shared_ptr<Job> &)> test_func);
     bool itemExists(const std::shared_ptr<Job> &job);
     std::shared_ptr<Job> poll();
-    std::shared_ptr<Job> peek();
+    std::shared_ptr<Job> peek() const;
 
     std::string toString() const;
 };

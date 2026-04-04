@@ -13,6 +13,9 @@ Simulator::Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
     case Scheduler::SchedulerType::SJF:
         mScheduler = std::make_unique<ShortestJobFirst>();
         break;
+    case Scheduler::SchedulerType::STCF:
+        mScheduler = std::make_unique<ShortestTimeCompletionFirst>();
+        break;
     default:
         throw std::invalid_argument("Unknown Scheduler Type");
     }
