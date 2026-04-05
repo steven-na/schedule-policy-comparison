@@ -1,6 +1,7 @@
 #include "JobQueue.h"
 
 void JobQueue::enqueue(const std::shared_ptr<Job> &job) {
+    assert(job && "Can't pass 'nullptr' into JobQueue::enqueue");
     std::shared_ptr<QueueItem> new_item = std::make_shared<QueueItem>();
     new_item->job = job;
 
@@ -16,6 +17,7 @@ void JobQueue::enqueue(const std::shared_ptr<Job> &job) {
 }
 
 void JobQueue::dequeue(const std::shared_ptr<Job> &job) {
+    assert(job && "Can't pass 'nullptr' into JobQueue::dequeue");
     if (!tail) {
         return;
     }
@@ -49,6 +51,7 @@ void JobQueue::dequeue(const std::shared_ptr<Job> &job) {
 void JobQueue::enqueueWeighted(
     const std::shared_ptr<Job> &job,
     std::function<bool(std::shared_ptr<Job> &)> test_func) {
+    assert(job && "Can't pass 'nullptr' into JobQueue::enqueueWeighted");
 
     if (!tail) {
         enqueue(job);
@@ -79,6 +82,7 @@ void JobQueue::enqueueWeighted(
 }
 
 bool JobQueue::itemExists(const std::shared_ptr<Job> &job) {
+    assert(job && "Can't pass 'nullptr' into JobQueue::itemExists");
     if (!tail) {
         return false;
     }

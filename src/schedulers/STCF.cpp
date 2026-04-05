@@ -25,7 +25,7 @@ std::shared_ptr<Job> ShortestTimeCompletionFirst::chooseJob() {
 
 std::string ShortestTimeCompletionFirst::toString() const {
     if (!jobs.peek()) {
-        return std::string{"STCF(No job)"};
+        return std::string{"STCF()"};
     }
     auto job = jobs.peek();
     return std::format("STCF(Job {} with {} remaining ticks)", job->id,

@@ -1,7 +1,8 @@
 #include "simulator.h"
 
 Simulator::Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
-                     Scheduler::SchedulerType stype)
+                     Scheduler::SchedulerType stype,
+                     const int RR_maxQuantumLength)
     : mAllJobs{jobs} {
     switch (stype) {
     case Scheduler::SchedulerType::FIFO:
@@ -15,6 +16,9 @@ Simulator::Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
         break;
     case Scheduler::SchedulerType::STCF:
         mScheduler = std::make_unique<ShortestTimeCompletionFirst>();
+        break;
+    case Scheduler::SchedulerType::RR:
+        mScheduler = std::make_unique<RoundRobin>(RR_maxQuantumLength);
         break;
     default:
         throw std::invalid_argument("Unknown Scheduler Type");

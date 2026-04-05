@@ -8,6 +8,7 @@
 
 #include "schedulers/FIFO.h"
 #include "schedulers/FIFOQueue.h"
+#include "schedulers/RR.h"
 #include "schedulers/SJF.h"
 #include "schedulers/STCF.h"
 
@@ -40,7 +41,8 @@ class Simulator {
 
   public:
     Simulator(const std::vector<std::shared_ptr<Job>> &jobs,
-              Scheduler::SchedulerType stype);
+              Scheduler::SchedulerType stype,
+              const int RR_maxQuantumLength = -1);
     ~Simulator() = default;
 
     // simulation member functions

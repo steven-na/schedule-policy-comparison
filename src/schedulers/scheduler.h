@@ -15,5 +15,5 @@ class Scheduler {
 
     virtual ~Scheduler() = default;
 
-    enum class SchedulerType { FIFO, FIFOQUEUE, SJF, STCF };
+    enum class SchedulerType { FIFO, FIFOQUEUE, SJF, STCF, RR };
 };
